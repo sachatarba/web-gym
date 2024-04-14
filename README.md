@@ -81,3 +81,19 @@ __________
 __________
 ## Формализация ключевых бизнес-процессов
 ![diagram](docs/img/svg/diagram.svg)
+__________
+# Лабораторная №2
+__________
+## Тип приложения
+WEB MPA или WEB SPA
+__________
+## Технологический стек
+- Backend: Go
+- Frontend: HTML, CSS, JS
+- Database: PostgreSQL
+
+## Верхнеуровневое разбиение на компоненты
+![diagram](docs/img/svg/components.svg)
+
+## UML-диаграмма классов
+![uml](docs/img/svg/UML.svg)
