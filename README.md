@@ -83,7 +83,7 @@ __________
 ![diagram](docs/img/svg/diagram.svg)
 __________
 # Лабораторная №2
-__________
+
 ## Тип приложения
 WEB MPA или WEB SPA
 __________
@@ -91,9 +91,10 @@ __________
 - Backend: Go
 - Frontend: HTML, CSS, JS
 - Database: PostgreSQL
-
+__________
 ## Верхнеуровневое разбиение на компоненты
 ![diagram](docs/img/svg/components.svg)
-
+__________
 ## UML-диаграмма классов
-![uml](docs/img/svg/UML.svg)
+Изображение в svg формате хранится в репозитории
+![uml](docs/img/png/UML.png)
