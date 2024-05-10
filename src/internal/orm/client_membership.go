@@ -1,4 +1,4 @@
-package models
+package orm
 
 import (
 	"github.com/google/uuid"
@@ -12,3 +12,4 @@ type ClientMembership struct {
 	MembershipType   MembershipType
 	ClientID         uuid.UUID
 }
+
