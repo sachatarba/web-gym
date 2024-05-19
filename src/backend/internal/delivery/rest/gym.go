@@ -1,4 +1,4 @@
-package http
+package rest
 
 import (
 	"log"
@@ -10,7 +10,7 @@ import (
 	"github.com/sachatarba/course-db/internal/entity"
 )
 
-func (h *Handler) GetGyms(ctx *gin.Context) {
+func (h *Handler) ListGyms(ctx *gin.Context) {
 	log.Print("GetGyms request:", ctx.Request)
 
 	gyms, err := h.gymService.ListGyms(ctx.Request.Context())

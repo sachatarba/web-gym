@@ -10,7 +10,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/sachatarba/course-db/internal/config"
-	handler "github.com/sachatarba/course-db/internal/delivery/http"
+	handler "github.com/sachatarba/course-db/internal/delivery/rest"
 )
 
 type Server struct {

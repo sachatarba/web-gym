@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/sachatarba/course-db/internal/config"
-	handler "github.com/sachatarba/course-db/internal/delivery/http"
+	handler "github.com/sachatarba/course-db/internal/delivery/rest"
 	"github.com/sachatarba/course-db/internal/orm"
 	postrgres_adapter "github.com/sachatarba/course-db/internal/postrgres"
 	redis_adapter "github.com/sachatarba/course-db/internal/redis"

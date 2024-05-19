@@ -1,4 +1,4 @@
-package http
+package rest
 
 import (
 	"github.com/gin-gonic/gin"
@@ -41,7 +41,7 @@ func (h *Handler) InitApi(router gin.IRouter) {
 
 			v1.GET("/isauthorize", h.IsAuthorize)
 			v1.GET("/logout", h.Logout)
-			v1.GET("/clients", h.GetClients)
+			v1.GET("/clients", h.ListClients)
 		}
 	}
 }

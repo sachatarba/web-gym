@@ -18,7 +18,7 @@ func NewClientMembershipService(clientMembershipRepo IClientMembershipsRepositor
 }
 
 func (m *ClientMembershipsService) CreateNewClientMembership(ctx context.Context, clientMembership entity.ClientMembership) error {
-	if !clientMembership.Validate() || !clientMembership.MembershipType.Validate() {
+	if !clientMembership.Validate() {
 		return ErrValidation
 	}
 

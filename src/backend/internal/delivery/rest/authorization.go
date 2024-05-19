@@ -1,4 +1,4 @@
-package http
+package rest
 
 import (
 	"log"
@@ -83,7 +83,7 @@ func (h *Handler) Login(ctx *gin.Context) {
 	ctx.SetCookie(
 		"session",
 		session.SessionID.String(),
-		int(session.TTL.Unix()-time.Now().Unix()),
+		int(session.TTL.UnixMilli()-time.Now().UnixMilli()),
 		"/",
 		"",
 		false,
