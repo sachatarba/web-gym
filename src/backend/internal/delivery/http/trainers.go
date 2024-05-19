@@ -27,7 +27,7 @@ func (h *Handler) GetListTrainersByGymID(ctx *gin.Context) {
 		return
 	}
 
-	equipments, err := h.equipmentService.ListEquipmentsByGymID(ctx.Request.Context(), uuID)
+	trainers, err := h.trainerService.ListTrainersByGymID(ctx.Request.Context(), uuID)
 	if err != nil {
 		log.Print(err)
 		ctx.JSON(http.StatusInternalServerError, gin.H{"err": err.Error()})
@@ -35,5 +35,5 @@ func (h *Handler) GetListTrainersByGymID(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"equipments": equipments})
+	ctx.JSON(http.StatusOK, gin.H{"trainers": trainers})
 }

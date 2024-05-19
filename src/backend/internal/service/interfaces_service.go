@@ -8,6 +8,10 @@ import (
 )
 
 type (
+	IApiServicesBuilder interface {
+		NewServices() (*ApiServices, error)
+	}
+
 	IEquipmentService interface {
 		CreateNewEquipment(ctx context.Context, equipment entity.Equipment) error
 		ChangeEquipment(ctx context.Context, equipment entity.Equipment) error

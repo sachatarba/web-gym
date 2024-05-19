@@ -6,36 +6,42 @@ import (
 )
 
 type Handler struct {
-	clientService        service.IClientService
-	authorizationService service.IAuthorizationService
-	gymService           service.IGymService
-	equipmentService     service.IEquipmentService
+	authorizationService    service.IAuthorizationService
+	clientMembershipService service.IClientMembershipsService
+	clientService           service.IClientService
+	equipmentService        service.IEquipmentService
+	gymService              service.IGymService
+	membershipTypeService   service.IMembershipTypeService
+	scheduleService         service.IScheduleService
+	trainerService          service.ITrainerService
+	trainingService         service.ITrainingService
 }
 
-type Services struct {
-	ClientService        service.IClientService
-	AuthorizationService service.IAuthorizationService
-	GymService           service.IGymService
-	EquipmentService     service.IEquipmentService
-}
-
-func NewHandler(services Services) *Handler {
+func NewHandler(services service.ApiServices) *Handler {
 	return &Handler{
-		clientService:        services.ClientService,
-		authorizationService: services.AuthorizationService,
-		gymService:           services.GymService,
-		equipmentService:     services.EquipmentService,
+		authorizationService:    services.AuthorizationService,
+		clientMembershipService: services.ClientMembershipService,
+		clientService:           services.ClientService,
+		equipmentService:        services.EquipmentService,
+		gymService:              services.GymService,
+		membershipTypeService:   services.MembershipTypeService,
+		scheduleService:         services.ScheduleService,
+		trainerService:          services.TrainerService,
+		trainingService:         services.TrainingService,
 	}
 }
 
-func (h *Handler) Init(api *gin.RouterGroup) {
-	v1 := api.Group("/v1")
+func (h *Handler) InitApi(router gin.IRouter) {
+	api := router.Group("/api")
 	{
-		v1.POST("/register", h.RegisterNewUser)
-		v1.POST("/login", h.Login)
+		v1 := api.Group("/v1")
+		{
+			v1.POST("/register", h.RegisterNewUser)
+			v1.POST("/login", h.Login)
 
-		v1.GET("/isauthorize", h.IsAuthorize)
-		v1.GET("/logout", h.Logout)
-		v1.GET("/clients", h.GetClients)
+			v1.GET("/isauthorize", h.IsAuthorize)
+			v1.GET("/logout", h.Logout)
+			v1.GET("/clients", h.GetClients)
+		}
 	}
 }

@@ -5,6 +5,9 @@ import (
 )
 
 var (
+	// ReposInit
+	ErrInitRepos = errors.New("can't init repos")
+
 	// Repo errors
 	ErrDeleteRecordNotFound = errors.New("can't delete, no such row for the specified identifier")
 	ErrUpdateRecordNotFound = errors.New("can't update, no such row for update for the specified identifier")

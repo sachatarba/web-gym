@@ -1,72 +1,77 @@
 package main
 
-import (
-	"fmt"
-	"net/http"
-	"os"
-
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
-
-	"github.com/gin-gonic/gin"
-	"github.com/go-redis/redis/v8"
-	handler "github.com/sachatarba/course-db/internal/delivery/http"
-	"github.com/sachatarba/course-db/internal/orm"
-	"github.com/sachatarba/course-db/internal/repository"
-	"github.com/sachatarba/course-db/internal/service"
-)
+import "github.com/sachatarba/course-db/internal/api"
 
 func main() {
-	host := os.Getenv("HOST")
-	pswd := os.Getenv("POSTGRES_PASSWORD")
-	usr := os.Getenv("POSTGRES_USER")
-	dbName := os.Getenv("POSTGRES_DB")
+	api := api.ApiServer{}
+	api.Run()
+	// host := os.Getenv("POSTGRES_HOST")
+	// pswd := os.Getenv("POSTGRES_PASSWORD")
+	// usr := os.Getenv("POSTGRES_USER")
+	// dbName := os.Getenv("POSTGRES_DB")
+	// sslMode := os.Getenv("POSTGRES_SSLMODE")
 
-	dsn := fmt.Sprintf("host=%s user=%s dbname=%s password=%s sslmode=disable", host, usr, dbName, pswd)
+	// dsn := fmt.Sprintf("host=%s user=%s dbname=%s password=%s sslmode=%s", host, usr, dbName, pswd, sslMode)
 
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		fmt.Println("Err while openning db: ", err)
-	}
+	// db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	// if err != nil {
+	// 	fmt.Println("Err while openning db: ", err)
+	// }
 
-	err = db.AutoMigrate(
-		&orm.Client{},
-		&orm.Gym{},
-		&orm.Equipment{},
-		&orm.MembershipType{},
-		&orm.ClientMembership{},
-		&orm.Schedule{},
-		&orm.Trainer{},
-		&orm.Training{},
-	)
+	// err = db.AutoMigrate(
+	// 	&orm.Client{},
+	// 	&orm.Gym{},
+	// 	&orm.Equipment{},
+	// 	&orm.MembershipType{},
+	// 	&orm.ClientMembership{},
+	// 	&orm.Schedule{},
+	// 	&orm.Trainer{},
+	// 	&orm.Training{},
+	// )
 
-	if err != nil {
-		fmt.Println("Err while migrating db: ", err)
-	}
+	// if err != nil {
+	// 	fmt.Println("Err while migrating db: ", err)
+	// }
 
-	redisHost := os.Getenv("REDIS_HOST")
-	redistPort := os.Getenv("REDIS_PORT")
+	// redisHost := os.Getenv("REDIS_HOST")
+	// redistPort := os.Getenv("REDIS_PORT")
 
-	rdb := redis.NewClient(&redis.Options{
-		Addr: fmt.Sprintf("%s:%s", redisHost, redistPort),
-	})
+	// rdb := redis.NewClient(&redis.Options{
+	// 	Addr: fmt.Sprintf("%s:%s", redisHost, redistPort),
+	// })
 
-	clientRepo := repository.NewClientRepo(db)
-	sessionRepo := repository.NewSessionRepo(rdb)
+	// sessionRepository    := repository.NewSessionRepo(rdb)
+	// clientMembershipRepository := repository.NewClientMembershipRepo(db)
+	// clientRepository           := repository.NewClientRepo(db)
+	// equipmentRepository        := repository.NewEquipmentRepo(db)
+	// gymRepository              := repository.NewGymRepo(db)
+	// membershipTypeRepository   := repository.NewMembershipTypeRepo(db)
+	// scheduleRepository         := repository.NewScheduleRepo(db)
+	// trainerRepository          := repository.NewTrainerRepo(db)
+	// trainingRepository         := repository.NewTrainingRepo(db)
 
-	authorizationService := service.NewAuthorizationService(sessionRepo, clientRepo)
-	clientService := service.NewClientService(clientRepo)
+	// authorizationService := service.NewAuthorizationService(sessionRepository, clientRepository)
+	// clientMembershipService := service.NewClientMembershipService(clientMembershipRepository)
+	// clientService           := service.NewClientService(clientRepository)
+	// equipmentService        := service.NewEquipmentService(equipmentRepository)
+	// gymService              := service.NewGymService(gymRepository)
+	// membershipTypeService   := service.NewMembershipTypeService(membershipTypeRepository)
+	// scheduleService         := service.NewScheduleService(scheduleRepository)
+	// trainerService          := service.NewTrainerService(trainerRepository)
+	// trainingService         := service.NewTrainingService(trainingRepository)
 
-	handler := handler.NewHandler(clientService, authorizationService)
+	// handler := handler.NewHandler(clientService, authorizationService)
 
-	router := gin.Default()
-	router.GET("/ping", func(ctx *gin.Context) { ctx.AbortWithError(http.StatusOK, nil) })
-	handler.Init(router.Group("/api"))
-	server := &http.Server{
-		Addr:    ":8080",
-		Handler: router,
-	}
-	server.ListenAndServe()
+	// router := gin.Default()
+	// router.GET("/ping", func(ctx *gin.Context) {
+	// 	ctx.Status(http.StatusOK)
+	// })
+	// handler.Init(router.Group("/api"))
+	// server := &http.Server{
+	// 	Addr:    ":8080",
+	// 	Handler: router,
+	// }
+	// server.ListenAndServe()
 
 	// go func() {
 	// 	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {

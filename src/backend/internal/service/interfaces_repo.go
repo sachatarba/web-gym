@@ -8,6 +8,10 @@ import (
 )
 
 type (
+	// IReposBuilder interface {
+	// 	NewRepos(ctx context.Context, config config.Config) (*Repos, error)
+	// }
+
 	IEquipmentRepository interface {
 		CreateNewEquipment(ctx context.Context, equipment entity.Equipment) error
 		ChangeEquipment(ctx context.Context, equipment entity.Equipment) error
@@ -82,4 +86,3 @@ type (
 		GetSessionBySessionID(ctx context.Context, sessionID uuid.UUID) (entity.Session, error)
 	}
 )
-
