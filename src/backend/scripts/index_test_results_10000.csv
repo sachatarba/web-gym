@@ -1,0 +1,7 @@
+num_rows,index,execution_time
+10000,Без индексов,34.287
+10000,name,33.961
+10000,description,33.82
+10000,gymid,33.106
+10000,name и gymid,32.859
+10000,name и description и gymid,32.913

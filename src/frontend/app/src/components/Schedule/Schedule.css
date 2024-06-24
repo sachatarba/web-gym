@@ -1,0 +1,47 @@
+.schedule-page {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 20px auto;
+  }
+  
+  .schedule-page h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .schedule-page form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .schedule-page label {
+    display: flex;
+    flex-direction: column;
+    color: #555;
+  }
+  
+  .schedule-page input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .schedule-page button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .schedule-page button:hover {
+    background-color: #0056b3;
+  }
+  

@@ -14,15 +14,18 @@ import (
 )
 
 type Server struct {
-	Handler *handler.Handler
-	Conf    *config.ServerConfig
+	Handler        *handler.Handler
+	PaymentHandler *handler.PaymentHandler
+	Conf           *config.ServerConfig
 }
 
 func (server *Server) Run() {
 	router := gin.Default()
+	router.Use(handler.CORSMiddleware)
 	router.GET("/ping", func(ctx *gin.Context) {
 		ctx.Status(http.StatusOK)
 	})
+	server.PaymentHandler.InitPayment(router)
 	server.Handler.InitApi(router)
 
 	serv := &http.Server{

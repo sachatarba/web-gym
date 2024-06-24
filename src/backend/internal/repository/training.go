@@ -43,8 +43,12 @@ func (r *TrainingRepo) DeleteTraining(ctx context.Context, trainingID uuid.UUID)
 }
 
 func (r *TrainingRepo) ListTrainingsByTrainerID(ctx context.Context, trainerID uuid.UUID) ([]entity.Training, error) {
-	var trainingOrms []orm.Training
-	tx := r.db.WithContext(ctx).Where(&orm.Training{TrainerID: trainerID}).Find(&trainingOrms)
-	
-	return r.converter.ConvertToEntitySlice(trainingOrms), tx.Error
+	// var trainingOrms []orm.Training
+	var trainerOrm orm.Trainer
+	tx := r.db.WithContext(ctx).Preload("Trainings").Find(&trainerOrm)
+	// log.Print("trainings:", trainerOrm.Trainings, tx.Error)
+	// log.Print("kek")
+	// tx := r.db.WithContext(ctx).Where(&orm.Training{TrainerID: trainerID}).Find(&trainingOrms)
+
+	return r.converter.ConvertToEntitySlice(trainerOrm.Trainings), tx.Error
 }

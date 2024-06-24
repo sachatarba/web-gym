@@ -1,0 +1,29 @@
+.navbar {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  transition: background-color 0.3s;
+}
+
+.navbar a:hover {
+  background-color: #575757;
+}
+
+.navbar .nav-links {
+  display: flex;
+  gap: 10px;
+}
+
+.navbar .auth-links {
+  display: flex;
+  gap: 10px;
+}

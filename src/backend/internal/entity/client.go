@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"log"
 	"time"
 
 	"github.com/google/uuid"
@@ -21,10 +22,11 @@ type Client struct {
 
 func (cl *Client) Validate() bool {
 	date, err := time.Parse(time.DateOnly, cl.Birthdate)
+	log.Print(cl, date, err)
 	if err != nil {
 		return false
 	}
-	cl.Birthdate = date.String()
+	cl.Birthdate = date.Format(time.DateOnly)
 
 	if cl.Login == "" || cl.Password == "" {
 		return false

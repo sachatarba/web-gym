@@ -25,13 +25,9 @@ func (h *Handler) ListClients(ctx *gin.Context) {
 func (h *Handler) GetClientByLogin(ctx *gin.Context) {
 	log.Print("GetClientByLogin request:", ctx.Request)
 
-	login, ok := ctx.Keys["login"]
-	if !ok {
-		log.Print()
-		ctx.JSON(http.StatusInternalServerError, gin.H{"err": ErrNoKeyInRequest.Error()})
-	}
+	login := ctx.Param("login")
 
-	client, err := h.clientService.GetClientByLogin(ctx.Request.Context(), login.(string))
+	client, err := h.clientService.GetClientByLogin(ctx.Request.Context(), login)
 	if err != nil {
 		log.Print(err)
 		ctx.JSON(http.StatusInternalServerError, gin.H{"err": err.Error()})
@@ -43,13 +39,9 @@ func (h *Handler) GetClientByLogin(ctx *gin.Context) {
 func (h *Handler) GetClientByID(ctx *gin.Context) {
 	log.Print("GetClientByID request:", ctx.Request)
 
-	id, ok := ctx.Keys["id"]
-	if !ok {
-		log.Print()
-		ctx.JSON(http.StatusInternalServerError, gin.H{"err": ErrNoKeyInRequest.Error()})
-	}
+	id := ctx.Param("id")
 
-	uuID, err := uuid.Parse(id.(string))
+	uuID, err := uuid.Parse(id)
 	if err != nil {
 		log.Print(err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
@@ -100,13 +92,9 @@ func (h *Handler) ChangeClient(ctx *gin.Context) {
 func (h *Handler) DeleteClient(ctx *gin.Context) {
 	log.Print("DeleteClient request: ", ctx.Request)
 
-	id, ok := ctx.Keys["id"]
-	if !ok {
-		log.Print()
-		ctx.JSON(http.StatusInternalServerError, gin.H{"err": ErrNoKeyInRequest.Error()})
-	}
+	id := ctx.Param("id")
 
-	uuID, err := uuid.Parse(id.(string))
+	uuID, err := uuid.Parse(id)
 	if err != nil {
 		log.Print(err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})

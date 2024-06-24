@@ -1,12 +1,12 @@
 package orm
 
 var TablesORM []any = []any{
-	&ClientMembership{},
 	&Client{},
+	&ClientMembership{},
 	&Equipment{},
 	&Gym{},
 	&MembershipType{},
-	&Schedule{},
 	&Trainer{},
+	&Schedule{},
 	&Training{},
 }

@@ -58,7 +58,12 @@ func (r *ScheduleRepo) GetScheduleByID(ctx context.Context, scheduleID uuid.UUID
 
 func (r *ScheduleRepo) ListSchedulesByClientID(ctx context.Context, clientID uuid.UUID) ([]entity.Schedule, error) {
 	var scheduleOrms []orm.Schedule
-	tx := r.db.WithContext(ctx).Where(&orm.Schedule{ClientID: clientID}).Find(&scheduleOrms)
-	
+	tx := r.db.WithContext(ctx).
+		Where(&orm.Schedule{ClientID: clientID}).
+		Preload("Training").
+		Find(&scheduleOrms)
+
+	// log.Print(scheduleOrms)
+
 	return r.converter.ConvertToEntitySlice(scheduleOrms), tx.Error
 }

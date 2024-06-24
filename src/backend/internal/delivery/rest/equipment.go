@@ -13,13 +13,9 @@ import (
 func (h *Handler) ListEquipmentsByGymID(ctx *gin.Context) {
 	log.Print("GetListEquipmentsByGymID:", ctx.Request)
 
-	id, ok := ctx.Keys["id"]
-	if !ok {
-		log.Print()
-		ctx.JSON(http.StatusInternalServerError, gin.H{"err": ErrNoKeyInRequest.Error()})
-	}
+	id := ctx.Param("id")
 
-	uuID, err := uuid.Parse(id.(string))
+	uuID, err := uuid.Parse(id)
 	if err != nil {
 		log.Print(err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
@@ -94,13 +90,9 @@ func (h *Handler) ChangeEquipment(ctx *gin.Context) {
 func (h *Handler) DeleteEquipment(ctx *gin.Context) {
 	log.Print("DeleteEquipment request: ", ctx.Request)
 
-	id, ok := ctx.Keys["id"]
-	if !ok {
-		log.Print()
-		ctx.JSON(http.StatusInternalServerError, gin.H{"err": ErrNoKeyInRequest.Error()})
-	}
+	id := ctx.Param("id")
 
-	uuID, err := uuid.Parse(id.(string))
+	uuID, err := uuid.Parse(id)
 	if err != nil {
 		log.Print(err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})

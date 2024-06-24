@@ -19,13 +19,13 @@ func (m *ClientMembership) Validate() bool {
 	if err != nil {
 		return false
 	}
-	m.StartDate = startDate.String()
+	m.StartDate = startDate.Format(time.DateOnly)
 
 	endDate, err := time.Parse(time.DateOnly, m.EndDate)
 	if err != nil {
 		return false
 	}
-	m.EndDate = endDate.String()
+	m.EndDate = endDate.Format(time.DateOnly)
 
 	return startDate.Before(endDate)
 }

@@ -10,111 +10,110 @@ import (
 	"github.com/sachatarba/course-db/internal/entity"
 )
 
-// func (h *Handler) ListEquipmentsByGymID(ctx *gin.Context) {
-// 	log.Print("GetListEquipmentsByGymID:", ctx.Request)
+func (h *Handler) ListMembershipTypeByGymID(ctx *gin.Context) {
+	log.Print("ListMembershipTypeByGymID:", ctx.Request)
 
-// 	id, ok := ctx.Keys["id"]
-// 	if !ok {
-// 		log.Print()
-// 		ctx.JSON(http.StatusInternalServerError, gin.H{"err": ErrNoKeyInRequest.Error()})
-// 	}
+	id := ctx.Param("id")
 
-// 	uuID, err := uuid.Parse(id.(string))
-// 	if err != nil {
-// 		log.Print(err)
-// 		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
-// 	}
+	uuID, err := uuid.Parse(id)
+	if err != nil {
+		log.Print(err)
+		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
 
-// 	equipments, err := h.equipmentService.ListEquipmentsByGymID(ctx.Request.Context(), uuID)
-// 	if err != nil {
-// 		log.Print(err)
-// 		ctx.JSON(http.StatusInternalServerError, gin.H{"err": err.Error()})
-// 	}
+		return
+	}
 
-// 	ctx.JSON(http.StatusOK, gin.H{"equipments": equipments})
-// }
+	membershipTypes, err := h.membershipTypeService.ListMembershipTypesByGymID(ctx.Request.Context(), uuID)
+	if err != nil {
+		log.Print(err)
+		ctx.JSON(http.StatusInternalServerError, gin.H{"err": err.Error()})
 
-// func (h *Handler) CreateNewEquipment(ctx *gin.Context) {
-// 	log.Print("CreateNewEquipment:", ctx.Request)
+		return
+	}
 
-// 	var req request.EquipmentReq
+	ctx.JSON(http.StatusOK, gin.H{"membershipTypes": membershipTypes})
+}
 
-// 	err := ctx.BindJSON(&req)
-// 	if err != nil {
-// 		log.Print(err)
-// 		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
+func (h *Handler) CreateNewMembershipType(ctx *gin.Context) {
+	log.Print("CreateNewMembershipType:", ctx.Request)
 
-// 		return
-// 	}
+	var req request.MembershipTypeReq
 
-// 	err = h.equipmentService.CreateNewEquipment(ctx.Request.Context(), entity.Equipment{
-// 		ID:          req.ID,
-// 		Name:        req.Name,
-// 		Description: req.Description,
-// 		GymID:       req.GymID,
-// 	})
-// 	if err != nil {
-// 		log.Print(err)
-// 		ctx.JSON(http.StatusInternalServerError, gin.H{"err": err.Error()})
+	err := ctx.BindJSON(&req)
+	if err != nil {
+		log.Print(err)
+		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
 
-// 		return
-// 	}
+		return
+	}
 
-// 	ctx.Status(http.StatusOK)
-// }
+	err = h.membershipTypeService.RegisterNewMembershipType(ctx.Request.Context(), entity.MembershipType{
+		ID:           req.ID,
+		Type:         req.Type,
+		Description:  req.Description,
+		Price:        req.Price,
+		DaysDuration: req.DaysDuration,
+		GymID:        req.GymID,
+	})
+	if err != nil {
+		log.Print(err)
+		ctx.JSON(http.StatusInternalServerError, gin.H{"err": err.Error()})
 
-// func (h *Handler) ChangeEquipment(ctx *gin.Context) {
-// 	log.Print("ChangeEquipment request: ", ctx.Request)
+		return
+	}
 
-// 	var req request.EquipmentReq
-// 	err := ctx.BindJSON(&req)
-// 	if err != nil {
-// 		log.Print(err)
-// 		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
+	ctx.Status(http.StatusOK)
+}
 
-// 		return
-// 	}
+func (h *Handler) ChangeMembershipType(ctx *gin.Context) {
+	log.Print("ChangeMembershipType request: ", ctx.Request)
 
-// 	err = h.equipmentService.ChangeEquipment(ctx.Request.Context(), entity.Equipment{
-// 		ID:          req.ID,
-// 		Name:        req.Name,
-// 		Description: req.Description,
-// 		GymID:       req.GymID,
-// 	})
-// 	if err != nil {
-// 		log.Print(err)
-// 		ctx.JSON(http.StatusInternalServerError, gin.H{"err": err.Error()})
+	var req request.MembershipTypeReq
+	err := ctx.BindJSON(&req)
+	if err != nil {
+		log.Print(err)
+		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
 
-// 		return
-// 	}
+		return
+	}
 
-// 	ctx.Status(http.StatusOK)
-// }
+	err = h.membershipTypeService.ChangeMembershipType(ctx.Request.Context(), entity.MembershipType{
+		ID:           req.ID,
+		Type:         req.Type,
+		Price:        req.Price,
+		DaysDuration: req.DaysDuration,
+		GymID:        req.GymID,
+	})
+	if err != nil {
+		log.Print(err)
+		ctx.JSON(http.StatusInternalServerError, gin.H{"err": err.Error()})
 
-// func (h *Handler) DeleteEquipment(ctx *gin.Context) {
-// 	log.Print("DeleteEquipment request: ", ctx.Request)
+		return
+	}
 
-// 	id, ok := ctx.Keys["id"]
-// 	if !ok {
-// 		log.Print()
-// 		ctx.JSON(http.StatusInternalServerError, gin.H{"err": ErrNoKeyInRequest.Error()})
-// 	}
+	ctx.Status(http.StatusOK)
+}
 
-// 	uuID, err := uuid.Parse(id.(string))
-// 	if err != nil {
-// 		log.Print(err)
-// 		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
+func (h *Handler) DeleteMembershipType(ctx *gin.Context) {
+	log.Print("DeleteMembershipType request: ", ctx.Request)
 
-// 		return
-// 	}
+	id := ctx.Param("id")
 
-// 	err = h.equipmentService.DeleteEquipment(ctx.Request.Context(), uuID)
-// 	if err != nil {
-// 		log.Print(err)
-// 		ctx.JSON(http.StatusInternalServerError, gin.H{"err": err.Error()})
+	uuID, err := uuid.Parse(id)
+	if err != nil {
+		log.Print(err)
+		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
 
-// 		return
-// 	}
+		return
+	}
 
-// 	ctx.Status(http.StatusOK)
-// }
+	err = h.membershipTypeService.DeleteMembershipType(ctx.Request.Context(), uuID)
+	if err != nil {
+		log.Print(err)
+		ctx.JSON(http.StatusInternalServerError, gin.H{"err": err.Error()})
+
+		return
+	}
+
+	ctx.Status(http.StatusOK)
+}

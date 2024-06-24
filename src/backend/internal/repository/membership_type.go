@@ -57,8 +57,17 @@ func (r *MembershipTypeRepo) GetMembershipTypeByID(ctx context.Context, membersh
 }
 
 func (r *MembershipTypeRepo) ListMembershipTypesByGymID(ctx context.Context, gymID uuid.UUID) ([]entity.MembershipType, error) {
-	var membershipTypeOrms []orm.MembershipType
-	tx := r.db.WithContext(ctx).Where(&orm.MembershipType{GymID: gymID}).Find(&membershipTypeOrms)
-	
+	// var membershipTypeOrms []orm.MembershipType
+	gym := &orm.Gym{
+		ID: gymID,
+	}
+	tx := r.db.WithContext(ctx).Preload("MembershipTypes").First(gym)
+	membershipTypeOrms := gym.MembershipTypes
+	// tx := r.db.WithContext(ctx).Where(&orm.Gym{ID: gymID}).Find(&membershipTypeOrms)
+	// if errors.Is(tx.Error, gorm.ErrRecordNotFound) {
+	// 	tx.Error = errors.Join(tx.Error, service.ErrListByIDNotFound)
+	// }
+	// log.Print(membershipTypeOrms, gymID)
+
 	return r.converter.ConvertToEntitySlice(membershipTypeOrms), tx.Error
 }

@@ -10,18 +10,26 @@ import (
 	"github.com/sachatarba/course-db/internal/entity"
 )
 
-func (h *Handler) GetListTrainersByGymID(ctx *gin.Context) {
-	log.Print("GetListTrainersByGymID:", ctx.Request)
+func (h *Handler) GetListTrainers(ctx *gin.Context) {
+	log.Print("GetListTrainers:", ctx.Request)
 
-	id, ok := ctx.Keys["id"]
-	if !ok {
-		log.Print()
-		ctx.JSON(http.StatusInternalServerError, gin.H{"err": ErrNoKeyInRequest.Error()})
+	trainers, err := h.trainerService.ListTrainers(ctx.Request.Context())
+	if err != nil {
+		log.Print(err)
+		ctx.JSON(http.StatusInternalServerError, gin.H{"err": err.Error()})
 
 		return
 	}
 
-	uuID, err := uuid.Parse(id.(string))
+	ctx.JSON(http.StatusOK, gin.H{"trainers": trainers})
+}
+
+func (h *Handler) GetListTrainersByGymID(ctx *gin.Context) {
+	log.Print("GetListTrainersByGymID:", ctx.Request)
+
+	id := ctx.Param("id")
+
+	uuID, err := uuid.Parse(id)
 	if err != nil {
 		log.Print(err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
@@ -106,13 +114,9 @@ func (h *Handler) ChangeTrainer(ctx *gin.Context) {
 func (h *Handler) DeleteTrainer(ctx *gin.Context) {
 	log.Print("DeleteTrainer request: ", ctx.Request)
 
-	id, ok := ctx.Keys["id"]
-	if !ok {
-		log.Print()
-		ctx.JSON(http.StatusInternalServerError, gin.H{"err": ErrNoKeyInRequest.Error()})
-	}
+	id := ctx.Param("id")
 
-	uuID, err := uuid.Parse(id.(string))
+	uuID, err := uuid.Parse(id)
 	if err != nil {
 		log.Print(err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})

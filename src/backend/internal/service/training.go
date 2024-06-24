@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"log"
 
 	"github.com/google/uuid"
 	"github.com/sachatarba/course-db/internal/entity"
@@ -45,6 +46,7 @@ func (s *TrainingService) DeleteTraining(ctx context.Context, trainingID uuid.UU
 
 func (s *TrainingService) ListTrainingsByTrainerID(ctx context.Context, trainerID uuid.UUID) ([]entity.Training, error) {
 	trainings, err := s.trainingRepo.ListTrainingsByTrainerID(ctx, trainerID)
+	log.Print("service: ", trainings, err)
 	if err != nil {
 		return []entity.Training{}, err
 	}

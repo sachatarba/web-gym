@@ -10,7 +10,7 @@ import (
 type TrainerService struct {
 	trainerRepo ITrainerRepository
 }
-   
+
 func NewTrainerService(repository ITrainerRepository) ITrainerService {
 	return &TrainerService{
 		trainerRepo: repository,
@@ -22,7 +22,7 @@ func (s *TrainerService) RegisterNewTrainer(ctx context.Context, trainer entity.
 		return ErrValidation
 	}
 
-	err := s.trainerRepo.RegisterNewTrainer(ctx, trainer) 
+	err := s.trainerRepo.RegisterNewTrainer(ctx, trainer)
 
 	return err
 }
@@ -36,7 +36,6 @@ func (s *TrainerService) ChangeTrainer(ctx context.Context, trainer entity.Train
 
 	return err
 }
-
 
 func (s *TrainerService) DeleteTrainer(ctx context.Context, trainerID uuid.UUID) error {
 	err := s.trainerRepo.DeleteTrainer(ctx, trainerID)

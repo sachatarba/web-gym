@@ -10,6 +10,28 @@ import (
 	"github.com/sachatarba/course-db/internal/entity"
 )
 
+func (h *Handler) GetGymByID(ctx *gin.Context) {
+	log.Print("GetGymByID request:", ctx.Request)
+
+	id := ctx.Param("id")
+
+	uuID, err := uuid.Parse(id)
+	if err != nil {
+		log.Print(err)
+		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
+
+		return
+	}
+
+	gym, err := h.gymService.GetGymByID(ctx.Request.Context(), uuID)
+	if err != nil {
+		log.Print(err)
+		ctx.JSON(http.StatusInternalServerError, gin.H{"err": err.Error()})
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"gym": gym})
+}
+
 func (h *Handler) ListGyms(ctx *gin.Context) {
 	log.Print("GetGyms request:", ctx.Request)
 
@@ -88,13 +110,9 @@ func (h *Handler) ChangeGym(ctx *gin.Context) {
 func (h *Handler) DeleteGym(ctx *gin.Context) {
 	log.Print("ChangeGym request: ", ctx.Request)
 
-	id, ok := ctx.Keys["id"]
-	if !ok {
-		log.Print()
-		ctx.JSON(http.StatusInternalServerError, gin.H{"err": ErrNoKeyInRequest.Error()})
-	}
+	id := ctx.Param("id")
 
-	uuID, err := uuid.Parse(id.(string))
+	uuID, err := uuid.Parse(id)
 	if err != nil {
 		log.Print(err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})

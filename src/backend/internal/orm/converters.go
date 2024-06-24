@@ -37,7 +37,7 @@ func (conv *MembershipTypeConverter) ConvertToEntity(membership MembershipType) 
 }
 
 func (conv *MembershipTypeConverter) ConvertFromEntitySlice(memberships []entity.MembershipType) []MembershipType {
-	membershipsOrm := make([]MembershipType, 0, len(memberships))
+	membershipsOrm := make([]MembershipType, len(memberships))
 	for i := 0; i < len(memberships); i++ {
 		membershipsOrm[i] = conv.ConvertFromEntity(memberships[i])
 	}
@@ -46,7 +46,7 @@ func (conv *MembershipTypeConverter) ConvertFromEntitySlice(memberships []entity
 }
 
 func (conv *MembershipTypeConverter) ConvertToEntitySlice(membershipsOrm []MembershipType) []entity.MembershipType {
-	memberships := make([]entity.MembershipType, 0, len(membershipsOrm))
+	memberships := make([]entity.MembershipType, len(membershipsOrm))
 	for i := 0; i < len(memberships); i++ {
 		memberships[i] = conv.ConvertToEntity(membershipsOrm[i])
 	}
@@ -83,7 +83,7 @@ func (c *ClientMembershipConverter) ConvertToEntity(membership ClientMembership)
 }
 
 func (conv *ClientMembershipConverter) ConvertFromEntitySlice(clientMemberships []entity.ClientMembership) []ClientMembership {
-	membershipsOrm := make([]ClientMembership, 0, len(clientMemberships))
+	membershipsOrm := make([]ClientMembership, len(clientMemberships))
 	for i := 0; i < len(clientMemberships); i++ {
 		membershipsOrm[i] = conv.ConvertFromEntity(clientMemberships[i])
 	}
@@ -92,7 +92,7 @@ func (conv *ClientMembershipConverter) ConvertFromEntitySlice(clientMemberships 
 }
 
 func (conv *ClientMembershipConverter) ConvertToEntitySlice(membershipsOrm []ClientMembership) []entity.ClientMembership {
-	memberships := make([]entity.ClientMembership, 0, len(membershipsOrm))
+	memberships := make([]entity.ClientMembership, len(membershipsOrm))
 	for i := 0; i < len(memberships); i++ {
 		memberships[i] = conv.ConvertToEntity(membershipsOrm[i])
 	}
@@ -126,7 +126,7 @@ func (conv *EquipmentConverter) ConvertToEntity(e Equipment) entity.Equipment {
 }
 
 func (conv *EquipmentConverter) ConvertFromEntitySlice(eqs []entity.Equipment) []Equipment {
-	eqsOrm := make([]Equipment, 0, len(eqs))
+	eqsOrm := make([]Equipment, len(eqs))
 	for i := 0; i < len(eqs); i++ {
 		eqsOrm[i] = conv.ConvertFromEntity(eqs[i])
 	}
@@ -135,7 +135,7 @@ func (conv *EquipmentConverter) ConvertFromEntitySlice(eqs []entity.Equipment) [
 }
 
 func (conv *EquipmentConverter) ConvertToEntitySlice(eqsOrm []Equipment) []entity.Equipment {
-	eqs := make([]entity.Equipment, 0, len(eqsOrm))
+	eqs := make([]entity.Equipment, len(eqsOrm))
 	for i := 0; i < len(eqs); i++ {
 		eqs[i] = conv.ConvertToEntity(eqsOrm[i])
 	}
@@ -171,7 +171,7 @@ func (conv *TrainingConverter) ConvertToEntity(training Training) entity.Trainin
 }
 
 func (conv *TrainingConverter) ConvertFromEntitySlice(training []entity.Training) []Training {
-	trainingOrm := make([]Training, 0, len(training))
+	trainingOrm := make([]Training, len(training))
 	for i := 0; i < len(training); i++ {
 		trainingOrm[i] = conv.ConvertFromEntity(training[i])
 	}
@@ -180,7 +180,7 @@ func (conv *TrainingConverter) ConvertFromEntitySlice(training []entity.Training
 }
 
 func (conv *TrainingConverter) ConvertToEntitySlice(trainingOrm []Training) []entity.Training {
-	training := make([]entity.Training, 0, len(trainingOrm))
+	training := make([]entity.Training, len(trainingOrm))
 	for i := 0; i < len(training); i++ {
 		training[i] = conv.ConvertToEntity(trainingOrm[i])
 	}
@@ -196,7 +196,7 @@ func NewTrainerConverter() entity.IConverter[entity.Trainer, Trainer] {
 }
 
 func (conv *TrainerConverter) ConvertFromEntity(trainer entity.Trainer) Trainer {
-	gyms := make([]*Gym, 0, len(trainer.GymsID))
+	gyms := make([]*Gym, len(trainer.GymsID))
 	for i, id := range trainer.GymsID {
 		gyms[i] = &Gym{
 			ID: id,
@@ -207,6 +207,7 @@ func (conv *TrainerConverter) ConvertFromEntity(trainer entity.Trainer) Trainer 
 		ID:            trainer.ID,
 		Fullname:      trainer.Fullname,
 		Email:         trainer.Email,
+		Phone:         trainer.Phone,
 		Qualification: trainer.Qualification,
 		UnitPrice:     trainer.UnitPrice,
 		Gyms:          gyms,
@@ -215,7 +216,7 @@ func (conv *TrainerConverter) ConvertFromEntity(trainer entity.Trainer) Trainer 
 }
 
 func (conv *TrainerConverter) ConvertToEntity(trainer Trainer) entity.Trainer {
-	gymsID := make([]uuid.UUID, 0, len(trainer.Gyms))
+	gymsID := make([]uuid.UUID, len(trainer.Gyms))
 	for i, gym := range trainer.Gyms {
 		gymsID[i] = gym.ID
 	}
@@ -223,6 +224,7 @@ func (conv *TrainerConverter) ConvertToEntity(trainer Trainer) entity.Trainer {
 	return entity.Trainer{
 		ID:            trainer.ID,
 		Fullname:      trainer.Fullname,
+		Phone:         trainer.Phone,
 		Email:         trainer.Email,
 		Qualification: trainer.Qualification,
 		UnitPrice:     trainer.UnitPrice,
@@ -232,7 +234,7 @@ func (conv *TrainerConverter) ConvertToEntity(trainer Trainer) entity.Trainer {
 }
 
 func (conv *TrainerConverter) ConvertFromEntitySlice(trainers []entity.Trainer) []Trainer {
-	trainersOrm := make([]Trainer, 0, len(trainers))
+	trainersOrm := make([]Trainer, len(trainers))
 	for i := 0; i < len(trainers); i++ {
 		trainersOrm[i] = conv.ConvertFromEntity(trainers[i])
 	}
@@ -241,7 +243,7 @@ func (conv *TrainerConverter) ConvertFromEntitySlice(trainers []entity.Trainer) 
 }
 
 func (conv *TrainerConverter) ConvertToEntitySlice(trainersOrm []Trainer) []entity.Trainer {
-	trainers := make([]entity.Trainer, 0, len(trainersOrm))
+	trainers := make([]entity.Trainer, len(trainersOrm))
 	for i := 0; i < len(trainers); i++ {
 		trainers[i] = conv.ConvertToEntity(trainersOrm[i])
 	}
@@ -258,7 +260,7 @@ func NewGymConverter() entity.IConverter[entity.Gym, Gym] {
 
 func (conv *GymConverter) ConvertFromEntity(gym entity.Gym) Gym {
 	trainerConverter := NewTrainerConverter()
-	trainersPtr := make([]*Trainer, 0, len(gym.Trainers))
+	trainersPtr := make([]*Trainer, len(gym.Trainers))
 	for i, trainer := range gym.Trainers {
 		trainer := trainerConverter.ConvertFromEntity(trainer)
 		trainersPtr[i] = &trainer
@@ -278,7 +280,7 @@ func (conv *GymConverter) ConvertFromEntity(gym entity.Gym) Gym {
 }
 
 func (conv *GymConverter) ConvertToEntity(gym Gym) entity.Gym {
-	trainers := make([]entity.Trainer, 0, len(gym.Trainers))
+	trainers := make([]entity.Trainer, len(gym.Trainers))
 	trainersConverter := NewTrainerConverter()
 	for i, trainer := range gym.Trainers {
 		if trainer != nil {
@@ -302,7 +304,7 @@ func (conv *GymConverter) ConvertToEntity(gym Gym) entity.Gym {
 }
 
 func (conv *GymConverter) ConvertFromEntitySlice(gyms []entity.Gym) []Gym {
-	gymsOrm := make([]Gym, 0, len(gyms))
+	gymsOrm := make([]Gym, len(gyms))
 	for i, gym := range gyms {
 		gymsOrm[i] = conv.ConvertFromEntity(gym)
 	}
@@ -311,7 +313,7 @@ func (conv *GymConverter) ConvertFromEntitySlice(gyms []entity.Gym) []Gym {
 }
 
 func (conv *GymConverter) ConvertToEntitySlice(gymsOrm []Gym) []entity.Gym {
-	gyms := make([]entity.Gym, 0, len(gymsOrm))
+	gyms := make([]entity.Gym, len(gymsOrm))
 	for i, gym := range gymsOrm {
 		gyms[i] = conv.ConvertToEntity(gym)
 	}
@@ -338,6 +340,8 @@ func (conv *ScheduleConverter) ConvertFromEntity(schedule entity.Schedule) Sched
 }
 
 func (conv *ScheduleConverter) ConvertToEntity(scheduleOrm Schedule) entity.Schedule {
+	// start := time.Parse(time., scheduleOrm.StartTime)
+
 	return entity.Schedule{
 		ID:           scheduleOrm.ID,
 		DayOfTheWeek: scheduleOrm.DayOfTheWeek,

@@ -22,6 +22,10 @@ go.work
 
 node_modules
 
+Api.key
+ShopID.key
 ./api
 .env
+exportenv.py
+time_measure.py
 main

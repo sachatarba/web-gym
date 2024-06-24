@@ -48,6 +48,9 @@ func (api *ApiServer) Run() {
 		return
 	}
 
+	paymentConfig := conf.PaymentConfig
+	paymentHandler := handler.NewPaymentHandler(paymentConfig)
+
 	director := ApiServicesDirector{
 		Builder: &ApiServicesBuilder{
 			Postgres: db,
@@ -62,6 +65,7 @@ func (api *ApiServer) Run() {
 	}
 
 	server := server.Server{
+		PaymentHandler: paymentHandler,
 		Handler: handler.NewHandler(*services),
 		Conf:    &config.ServerConfig{},
 	}

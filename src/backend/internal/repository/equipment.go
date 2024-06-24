@@ -23,9 +23,13 @@ func NewEquipmentRepo(db *gorm.DB) service.IEquipmentRepository {
 
 func (r *EquipmentRepo) CreateNewEquipment(ctx context.Context, equipment entity.Equipment) error {
 	equipmentOrm := orm.NewEquipmentConverter().ConvertFromEntity(equipment)
-	tx := r.db.WithContext(ctx).Create(equipmentOrm)
+	err := r.db.WithContext(ctx).Model(
+		&orm.Gym{
+			ID: equipment.GymID,
+		},
+	).Association("Equipments").Append(&equipmentOrm)
 
-	return tx.Error
+	return err
 }
 
 func (r *EquipmentRepo) ChangeEquipment(ctx context.Context, equipment entity.Equipment) error {
@@ -63,16 +67,20 @@ func (r *EquipmentRepo) GetEquipmentByID(ctx context.Context, equipmentID uuid.U
 func (r *EquipmentRepo) ListEquipmentsByGymID(ctx context.Context, gymID uuid.UUID) ([]entity.Equipment, error) {
 	var equipmentsOrm []orm.Equipment
 
-	tx := r.db.WithContext(ctx).Where(&orm.Gym{ID: gymID}).Find(&equipmentsOrm)
-	if errors.Is(tx.Error, gorm.ErrRecordNotFound) {
-		tx.Error = errors.Join(tx.Error, service.ErrListByIDNotFound)
+	err := r.db.WithContext(ctx).Model(
+		&orm.Gym{
+			ID: gymID,
+		},
+	).Association("Equipments").Find(&equipmentsOrm)
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		err = errors.Join(err, service.ErrListByIDNotFound)
 	}
 
-	if tx.Error != nil {
-		return []entity.Equipment{}, tx.Error
+	if err != nil {
+		return []entity.Equipment{}, err
 	}
 
 	conv := orm.NewEquipmentConverter()
 
-	return conv.ConvertToEntitySlice(equipmentsOrm), tx.Error
+	return conv.ConvertToEntitySlice(equipmentsOrm), err
 }

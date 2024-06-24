@@ -83,6 +83,6 @@ type (
 		Register(ctx context.Context, client entity.Client) (entity.Session, error)
 		Logout(ctx context.Context, sessionID uuid.UUID) (entity.Session, error)
 		DeleteClient(ctx context.Context, clientID uuid.UUID) (entity.Session, error)
-		IsAuthorize(ctx context.Context, sessionID uuid.UUID) (bool, error)
+		IsAuthorize(ctx context.Context, sessionID uuid.UUID) (*entity.Session, error)
 	}
 )

@@ -1,0 +1,124 @@
+/* .admin-profile {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  .admin-profile h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .buttons button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .buttons button:hover {
+    background-color: #0056b3;
+  }
+  
+  .gym-item, .trainer-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .new-gym-form, .new-trainer-form, .gym-management {
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+  }
+  
+  .new-gym-form label, .new-trainer-form label, .gym-management label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .new-gym-form input, .new-trainer-form input, .gym-management input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .new-gym-form button, .new-trainer-form button, .gym-management button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .new-gym-form button:hover, .new-trainer-form button:hover, .gym-management button:hover {
+    background-color: #0056b3;
+  }
+   */
+
+   .admin-profile {
+    padding: 20px;
+  }
+  
+  .buttons {
+    margin-bottom: 20px;
+  }
+  
+  .buttons button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .gym-item, .trainer-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .new-gym-form, .new-trainer-form {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  label input, label select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+  }
+  
+  button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .gym-management {
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+  
+  .gym-management div {
+    margin-bottom: 20px;
+  }
+  

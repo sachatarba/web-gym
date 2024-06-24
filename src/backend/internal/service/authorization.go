@@ -23,13 +23,13 @@ func NewAuthorizationService(sessionRepo ISessionRepository, clientService IClie
 	}
 }
 
-func (a *AuthorizationService) IsAuthorize(ctx context.Context, sessionID uuid.UUID) (bool, error) {
-	_, err := a.sessionRepo.GetSessionBySessionID(ctx, sessionID)
+func (a *AuthorizationService) IsAuthorize(ctx context.Context, sessionID uuid.UUID) (*entity.Session, error) {
+	session, err := a.sessionRepo.GetSessionBySessionID(ctx, sessionID)
 	if err != nil {
-		return false, err
+		return nil, err
 	}
 
-	return true, nil
+	return &session, nil
 }
 
 func (a *AuthorizationService) Authorize(ctx context.Context, login string, password string) (entity.Session, error) {

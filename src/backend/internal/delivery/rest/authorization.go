@@ -3,7 +3,6 @@ package rest
 import (
 	"log"
 	"net/http"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -14,30 +13,30 @@ import (
 func (h *Handler) IsAuthorize(ctx *gin.Context) {
 	log.Print("IsAuthorize request:", ctx.Request)
 
-	session, err := ctx.Cookie("session")
+	sessionID, err := ctx.Cookie("session")
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
 		return
 	}
 
-	id, err := uuid.Parse(session)
+	id, err := uuid.Parse(sessionID)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
 		return
 	}
 
-	ok, err := h.authorizationService.IsAuthorize(ctx, id)
+	session, err := h.authorizationService.IsAuthorize(ctx, id)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
 		return
 	}
 
-	if !ok {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"status": "unauthorized"})
+	if session == nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"session": nil})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"status": "authorized"})
+	ctx.JSON(http.StatusOK, gin.H{"session": session})
 }
 
 func (h *Handler) Logout(ctx *gin.Context) {
@@ -54,7 +53,7 @@ func (h *Handler) Logout(ctx *gin.Context) {
 		0,
 		"/",
 		"",
-		false,
+		true,
 		true,
 	)
 	ctx.Status(http.StatusOK)
@@ -80,16 +79,30 @@ func (h *Handler) Login(ctx *gin.Context) {
 		return
 	}
 
-	ctx.SetCookie(
-		"session",
-		session.SessionID.String(),
-		int(session.TTL.UnixMilli()-time.Now().UnixMilli()),
-		"/",
-		"",
-		false,
-		true,
-	)
+	// ctx.SetCookie(
+	// 	"session",
+	// 	session.SessionID.String(),
+	// 	int(session.TTL.Unix()-time.Now().Unix()),
+	// 	"/",
+	// 	"",
+	// 	true,
+	// 	true,
+	// )
+	cookie := &http.Cookie{
+		Name:    "session",
+		Value:   session.SessionID.String(),
+		Path:    "/",
+		Domain:  "localhost", // Убедитесь, что домен указан правильно
+		Expires: session.TTL, //time.Now().Add(session.TTL),
+		// MaxAge:   int(session.TTL.Second()),
+		HttpOnly: true,
+		Secure:   false,
+		SameSite: http.SameSiteLaxMode, // Установите SameSite=None
+	}
+
+	http.SetCookie(ctx.Writer, cookie)
 	ctx.Status(http.StatusOK)
+	ctx.JSON(http.StatusOK, gin.H{"session": session})
 }
 
 func (h *Handler) RegisterNewUser(ctx *gin.Context) {
@@ -128,8 +141,9 @@ func (h *Handler) RegisterNewUser(ctx *gin.Context) {
 		session.TTL.Second(),
 		"/",
 		"",
-		false,
+		true,
 		true,
 	)
 	ctx.Status(http.StatusOK)
+	ctx.JSON(http.StatusOK, gin.H{"session": session})
 }

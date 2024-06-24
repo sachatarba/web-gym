@@ -23,7 +23,7 @@ func (s *MembershipTypeService) RegisterNewMembershipType(ctx context.Context, m
 	}
 
 	err := s.membershipTypeRepo.RegisterNewMembershipType(ctx, membershipType)
-	
+
 	return err
 }
 
@@ -31,14 +31,14 @@ func (s *MembershipTypeService) ChangeMembershipType(ctx context.Context, member
 	if !membershipType.Validate() {
 		return ErrValidation
 	}
-	
+
 	err := s.membershipTypeRepo.ChangeMembershipType(ctx, membershipType)
 	return err
 }
 
 func (s *MembershipTypeService) DeleteMembershipType(ctx context.Context, membershipTypeID uuid.UUID) error {
 	err := s.membershipTypeRepo.DeleteMembershipType(ctx, membershipTypeID)
-	
+
 	return err
 }
 
@@ -47,7 +47,7 @@ func (s *MembershipTypeService) GetMembershipTypeByID(ctx context.Context, membe
 	if err != nil {
 		return entity.MembershipType{}, err
 	}
-	
+
 	return membershipType, nil
 }
 
@@ -56,6 +56,6 @@ func (s *MembershipTypeService) ListMembershipTypesByGymID(ctx context.Context, 
 	if err != nil {
 		return []entity.MembershipType{}, err
 	}
-	
+
 	return membershipTypes, nil
 }

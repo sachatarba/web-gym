@@ -13,13 +13,9 @@ import (
 func (h *Handler) ListClientMembershipsByClientID(ctx *gin.Context) {
 	log.Print("ListClientMembershipsByClientID:", ctx.Request)
 
-	id, ok := ctx.Keys["id"]
-	if !ok {
-		log.Print()
-		ctx.JSON(http.StatusInternalServerError, gin.H{"err": ErrNoKeyInRequest.Error()})
-	}
+	id := ctx.Param("id")
 
-	uuID, err := uuid.Parse(id.(string))
+	uuID, err := uuid.Parse(id)
 	if err != nil {
 		log.Print(err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
@@ -100,13 +96,9 @@ func (h *Handler) ChangeClientMembership(ctx *gin.Context) {
 func (h *Handler) DeleteClientMembership(ctx *gin.Context) {
 	log.Print("DeleteClientMembership request: ", ctx.Request)
 
-	id, ok := ctx.Keys["id"]
-	if !ok {
-		log.Print()
-		ctx.JSON(http.StatusInternalServerError, gin.H{"err": ErrNoKeyInRequest.Error()})
-	}
+	id := ctx.Param("id")
 
-	uuID, err := uuid.Parse(id.(string))
+	uuID, err := uuid.Parse(id)
 	if err != nil {
 		log.Print(err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})

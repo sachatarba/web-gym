@@ -24,10 +24,22 @@ func NewTrainerRepo(db *gorm.DB) service.ITrainerRepository {
 }
 
 func (r *TrainerRepo) RegisterNewTrainer(ctx context.Context, trainer entity.Trainer) error {
+	var err error
 	trainerOrm := r.converter.ConvertFromEntity(trainer)
-	tx := r.db.WithContext(ctx).Create(&trainerOrm)
+	trainerOrm.Gyms = []*orm.Gym{}
+	// tx := r.db.WithContext(ctx).Create(&trainerOrm)
 
-	return tx.Error
+	for _, id := range trainer.GymsID {
+		err = r.db.Model(&orm.Gym{
+			ID: id,
+		}).Association("Trainers").Append(&trainerOrm)
+
+		if err != nil {
+			break
+		}
+	}
+
+	return err
 }
 
 func (r *TrainerRepo) ChangeTrainer(ctx context.Context, trainer entity.Trainer) error {
@@ -65,8 +77,20 @@ func (r *TrainerRepo) ListTrainers(ctx context.Context) ([]entity.Trainer, error
 
 // TODO: проверить что нормально работает, в идале бы придумать как избавить от вере через строку
 func (r *TrainerRepo) ListTrainersByGymID(ctx context.Context, gymID uuid.UUID) ([]entity.Trainer, error) {
-	var trainerOrms []orm.Trainer
-	tx := r.db.WithContext(ctx).Where("gymID = ?", gymID).Find(&trainerOrms)
+	var trainersOrmPtr []*orm.Trainer
+	err := r.db.Model(&orm.Gym{
+		ID: gymID,
+	}).Association("Trainers").Find(&trainersOrmPtr)
 
-	return r.converter.ConvertToEntitySlice(trainerOrms), tx.Error
+	if err != nil {
+		return nil, err
+	}
+	trainersOrm := make([]orm.Trainer, len(trainersOrmPtr))
+	for i, trainer := range trainersOrmPtr {
+		trainersOrm[i] = *trainer
+	}
+	// trainerOrms = gym.Trainers
+	// tx := r.db.WithContext(ctx).Where("gymID = ?", gymID).Find(&trainerOrms)
+
+	return r.converter.ConvertToEntitySlice(trainersOrm), err
 }

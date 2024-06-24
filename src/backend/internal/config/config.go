@@ -7,6 +7,7 @@ type (
 		PostgresConf *PostgresConfig
 		RedisConf    *RedisConfig
 		ServerConfig *ServerConfig
+		PaymentConfig *PaymentApiConfig
 	}
 
 	PostgresConfig struct {
@@ -28,7 +29,19 @@ type (
 		Host string
 		Port string
 	}
+
+	PaymentApiConfig struct {
+		ApiKey string
+		ShopID string
+	}
 )
+
+func paymentApiConfFromEnv() *PaymentApiConfig {
+	return &PaymentApiConfig{
+		ApiKey: os.Getenv("API_KEY"),
+		ShopID: os.Getenv("SHOP_ID"),
+	}
+}
 
 func serverConfFromEnv() *ServerConfig {
 	return &ServerConfig{
@@ -61,5 +74,6 @@ func NewConfFromEnv() *Config {
 		PostgresConf: postgresConfFromEnv(),
 		RedisConf:    redisConfFromEnv(),
 		ServerConfig: serverConfFromEnv(),
+		PaymentConfig: paymentApiConfFromEnv(),
 	}
 }
