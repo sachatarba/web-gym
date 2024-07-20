@@ -24,11 +24,9 @@ func (sh *Schedule) Validate() bool {
 	sh.DayOfTheWeek = date.Format(time.DateOnly)
 
 	startTime, err := time.Parse(time.TimeOnly, sh.StartTime)
-	// log.Print("here:", sh.StartTime, err)
 	if err != nil {
 		return false
 	}
-	// sh.StartTime = startTime.Format(time.TimeOnly)
 	sh.StartTime = time.Date(
 		date.Year(),
 		date.Month(),
@@ -42,11 +40,9 @@ func (sh *Schedule) Validate() bool {
 		Format(time.RFC3339)
 
 	endTime, err := time.Parse(time.TimeOnly, sh.EndTime)
-	// log.Print("here:", sh.StartTime, err)
 	if err != nil {
 		return false
 	}
-	// sh.EndTime = endTime.Format(time.TimeOnly)
 	sh.EndTime = time.Date(
 		date.Year(),
 		date.Month(),
@@ -59,7 +55,6 @@ func (sh *Schedule) Validate() bool {
 	).
 		Format(time.RFC3339)
 
-	// log.Print("here:", startTime.Before(endTime))
 
 	return startTime.Before(endTime)
 }

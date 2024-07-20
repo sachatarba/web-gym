@@ -8,7 +8,6 @@ import (
 )
 
 type EquipmentService struct {
-	// Repo
 	equipmentRepo IEquipmentRepository
 }
 

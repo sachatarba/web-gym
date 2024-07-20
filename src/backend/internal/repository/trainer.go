@@ -75,7 +75,7 @@ func (r *TrainerRepo) ListTrainers(ctx context.Context) ([]entity.Trainer, error
 	return r.converter.ConvertToEntitySlice(trainerOrms), tx.Error
 }
 
-// TODO: проверить что нормально работает, в идале бы придумать как избавить от вере через строку
+
 func (r *TrainerRepo) ListTrainersByGymID(ctx context.Context, gymID uuid.UUID) ([]entity.Trainer, error) {
 	var trainersOrmPtr []*orm.Trainer
 	err := r.db.Model(&orm.Gym{
@@ -89,8 +89,6 @@ func (r *TrainerRepo) ListTrainersByGymID(ctx context.Context, gymID uuid.UUID) 
 	for i, trainer := range trainersOrmPtr {
 		trainersOrm[i] = *trainer
 	}
-	// trainerOrms = gym.Trainers
-	// tx := r.db.WithContext(ctx).Where("gymID = ?", gymID).Find(&trainerOrms)
 
 	return r.converter.ConvertToEntitySlice(trainersOrm), err
 }

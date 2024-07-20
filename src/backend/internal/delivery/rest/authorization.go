@@ -79,25 +79,15 @@ func (h *Handler) Login(ctx *gin.Context) {
 		return
 	}
 
-	// ctx.SetCookie(
-	// 	"session",
-	// 	session.SessionID.String(),
-	// 	int(session.TTL.Unix()-time.Now().Unix()),
-	// 	"/",
-	// 	"",
-	// 	true,
-	// 	true,
-	// )
 	cookie := &http.Cookie{
 		Name:    "session",
 		Value:   session.SessionID.String(),
 		Path:    "/",
-		Domain:  "localhost", // Убедитесь, что домен указан правильно
-		Expires: session.TTL, //time.Now().Add(session.TTL),
-		// MaxAge:   int(session.TTL.Second()),
+		Domain:  "localhost", 
+		Expires: session.TTL, 
 		HttpOnly: true,
 		Secure:   false,
-		SameSite: http.SameSiteLaxMode, // Установите SameSite=None
+		SameSite: http.SameSiteLaxMode, 
 	}
 
 	http.SetCookie(ctx.Writer, cookie)

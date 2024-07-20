@@ -38,7 +38,6 @@ func (a *AuthorizationService) Authorize(ctx context.Context, login string, pass
 		return entity.Session{}, err
 	}
 
-	// "кеш функцию знаешь? я закешировал, понятно, да?"
 	if client.Password != password {
 		return entity.Session{}, ErrWrongPassword
 	}
@@ -98,33 +97,11 @@ func (a *AuthorizationService) Logout(ctx context.Context, sessionID uuid.UUID) 
 }
 
 
-// Пока особой логики нет, надо подумать над удалением сессий (надо ли оно)
 func (a *AuthorizationService) DeleteClient(ctx context.Context, clientID uuid.UUID) (entity.Session, error) {
 	err := a.clientService.DeleteClient(ctx, clientID)
 	if err != nil {
 		return entity.Session{}, err
 	}
-	// В принципе сессии можно не удалять, 
-	// так как в редисе они сами удалятся по истечению TTL,
-	// а удалять все сессии может быть достаточно долго
-
-	// sessions, err := a.sessionRepo.GetSessionsByClientID(ctx, clientID)
-	// if err != nil {
-	// 	return entity.Session{}, err
-	// }
-
-	// for i := 0; i < len(sessions) && err == nil; i++ {
-	// 	err = a.sessionRepo.DeleteSession(ctx, sessions[i].SessionID)
-	// }
-	// if err != nil {
-	// 	return entity.Session{}, err
-	// }
-
-	// session := entity.Session{
-	// 	ClientID:  clientID,
-	// 	SessionID: sessionID,
-	// 	TTL:       time.Now().Add(-10 * time.Hour),
-	// }
 
 	session := entity.Session{}
 

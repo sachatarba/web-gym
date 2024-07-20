@@ -170,11 +170,6 @@ func TestAuthorizationService_Authorize(t *testing.T) {
 			got, err := a.Authorize(tt.args.ctx, tt.args.login, tt.args.password)
 
 			assert.ErrorIsf(t, err, tt.wantErr, "errors misplace")
-			// if tt.wantErr {
-			// 	assert.NotNil(t, err, "an error not occurred although it was expected")
-			// } else {
-			// 	assert.Nil(t, err, "an error occurred although it was not expected")
-			// }
 
 			assert.Equal(t, tt.want.ClientID, got.ClientID, "wrong client id")
 		})

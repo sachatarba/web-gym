@@ -29,7 +29,7 @@ func (server *Server) Run() {
 	server.Handler.InitApi(router)
 
 	serv := &http.Server{
-		Addr:    ":8080", //fmt.Sprintf(":%s", server.Conf.Port),
+		Addr:    ":8080", 
 		Handler: router,
 	}
 

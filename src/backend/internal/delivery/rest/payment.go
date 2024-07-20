@@ -51,11 +51,6 @@ func (p *PaymentHandler) CreatePayment(c *gin.Context) {
 	}
 	defer resp.Body.Close()
 
-	// var paymentResp request.PaymentResponse
-	// if err := json.NewDecoder(resp.Body).Decode(&paymentResp); err != nil {
-	// 	c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-	// 	return
-	// }
 	var payment request.PaymentResponse
 	err = json.Unmarshal(body, &payment)
 	if err != nil {
@@ -67,6 +62,3 @@ func (p *PaymentHandler) CreatePayment(c *gin.Context) {
 	c.JSON(http.StatusOK, payment)
 }
 
-// func (h *PaymentHandler) ReturnURLHandler(c *gin.Context) {
-// 	c.JSON(http.StatusOK, gin.H{"msg": "Платеж завершен"})
-// }

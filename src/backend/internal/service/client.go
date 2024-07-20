@@ -8,7 +8,6 @@ import (
 )
 
 type ClientService struct {
-	// Repo
 	clientRepo IClientRepository
 }
 

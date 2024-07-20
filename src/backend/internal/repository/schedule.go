@@ -63,7 +63,5 @@ func (r *ScheduleRepo) ListSchedulesByClientID(ctx context.Context, clientID uui
 		Preload("Training").
 		Find(&scheduleOrms)
 
-	// log.Print(scheduleOrms)
-
 	return r.converter.ConvertToEntitySlice(scheduleOrms), tx.Error
 }

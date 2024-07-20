@@ -55,7 +55,6 @@ func (s *ScheduleService) GetScheduleByID(ctx context.Context, scheduleID uuid.U
 
 func (s *ScheduleService) ListSchedulesByClientID(ctx context.Context, clientID uuid.UUID) ([]entity.Schedule, error) {
 	schedules, err := s.scheduleRepo.ListSchedulesByClientID(ctx, clientID)
-	// log.Print(schedules)
 	if err != nil {
 		return []entity.Schedule{}, err
 	}

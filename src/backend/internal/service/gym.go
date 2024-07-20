@@ -7,17 +7,9 @@ import (
 	"github.com/sachatarba/course-db/internal/entity"
 )
 
-// var _ IGymService = &GymService{}  
 
 type GymService struct {
-	// Repos
 	gymRepo IGymRepository
-	// Services
-	// RegisterNewGym(gym entity.Gym) error
-	// ChangeGym(gym entity.Gym) error
-	// DeleteGym(gymID uuid.UUID) error
-	// GetGymByID(gymID uuid.UUID) (error, entity.Gym)
-	// ListGyms() (error, []entity.Gym)
 }
 
 func NewGymService(gymRepo IGymRepository) IGymService{

@@ -11,7 +11,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// Реализация репозитория GymRepo
 type GymRepo struct {
 	db        *gorm.DB
 	converter entity.IConverter[entity.Gym, orm.Gym]

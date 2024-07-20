@@ -13,7 +13,6 @@ type PaymentHandler struct {
 
 func (h *PaymentHandler) InitPayment(router gin.IRouter) {
 	router.POST("/create-payment", h.CreatePayment)
-	// router.GET("/return-url", h.ReturnURLHandler)
 }
 
 func NewPaymentHandler(conf *config.PaymentApiConfig) *PaymentHandler {
@@ -75,7 +74,6 @@ func (h *Handler) InitApi(router gin.IRouter) {
 				client.POST("/change", h.ChangeClient)
 				client.GET("/all", h.ListClients)
 				client.GET("/:id", h.GetClientByID)
-				// clientMembership.POST("/new", h.RegisterNewUser)
 			}
 
 			equipment := v1.Group("/equipment")
@@ -84,7 +82,6 @@ func (h *Handler) InitApi(router gin.IRouter) {
 				equipment.POST("/change", h.ChangeEquipment)
 				equipment.POST("/delete", h.DeleteEquipment)
 				equipment.GET("/:id", h.ListEquipmentsByGymID)
-				// client.GET("/:login", h.GetClientByLogin)
 			}
 
 			gym := v1.Group("/gym")
@@ -94,7 +91,6 @@ func (h *Handler) InitApi(router gin.IRouter) {
 				gym.POST("/delete", h.DeleteGym)
 				gym.GET("/all", h.ListGyms)
 				gym.GET("/:id", h.GetGymByID)
-				// client.GET("/:login", h.GetClientByLogin)
 			}
 
 			membershipType := v1.Group("/membershipType")
@@ -103,7 +99,6 @@ func (h *Handler) InitApi(router gin.IRouter) {
 				membershipType.POST("/change", h.ChangeMembershipType)
 				membershipType.POST("/delete", h.DeleteMembershipType)
 				membershipType.GET("/:id", h.ListMembershipTypeByGymID)
-				// client.GET("/:login", h.GetClientByLogin)
 			}
 
 			schedule := v1.Group("/schedule")
@@ -112,7 +107,6 @@ func (h *Handler) InitApi(router gin.IRouter) {
 				schedule.POST("/change", h.ChangeSchedule)
 				schedule.POST("/delete", h.DeleteSchedule)
 				schedule.GET("/:id", h.ListSchedulesByClientID)
-				// client.GET("/:login", h.GetClientByLogin)
 			}
 
 			trainer := v1.Group("/trainer")
@@ -122,7 +116,6 @@ func (h *Handler) InitApi(router gin.IRouter) {
 				trainer.POST("/delete", h.DeleteTrainer)
 				trainer.GET("/all", h.GetListTrainers)
 				trainer.GET("/:id", h.GetListTrainersByGymID)
-				// client.GET("/:login", h.GetClientByLogin)
 			}
 
 			training := v1.Group("/training")
@@ -131,9 +124,7 @@ func (h *Handler) InitApi(router gin.IRouter) {
 				training.POST("/change", h.ChangeTraining)
 				training.POST("/delete", h.DeleteTraining)
 				training.GET("/:id", h.ListTrainingsByTrainerID)
-				// client.GET("/:login", h.GetClientByLogin)
 			}
-
 		}
 	}
 }
