@@ -1,7 +1,0 @@
-num_rows,index,execution_time
-250,Без индексов,0.776
-250,name,0.802
-250,description,0.847
-250,gymid,0.764
-250,name и gymid,0.782
-250,name и description и gymid,0.796
